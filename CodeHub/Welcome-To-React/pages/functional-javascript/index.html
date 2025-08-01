@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functional JavaScript in React | Stryk's Codehub</title>
+    <meta name="description" content="Master functional programming concepts in React including pure functions, immutability, higher-order components, and hooks. Learn how React's design embraces functional JavaScript principles.">
+    <meta name="keywords" content="functional programming, React JS, JavaScript, pure functions, immutability, higher-order components, React hooks, functional components">
+    <link rel="stylesheet" href="../../css/page-styles.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/animations.css">
+    <link rel="stylesheet" href="../../css/code-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/header.js" defer></script>
+    <script src="../js/footer.js" defer></script>
+    <script src="../../js/main.js" defer></script>
+    <script src="../../js/code-copy.js" defer></script>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+    
+    <main class="main-content">
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title">Functional JavaScript in React</h1>
+                <nav class="breadcrumb">
+                    <a href="../../index.html">Home</a>
+                    <span>/</span>
+                    <span>Functional JavaScript</span>
+                </nav>
+            </div>
+        </section>
+
+        <section class="page-content">
+            <div class="container container-flex">
+                <article class="content-article">
+                    <div class="content-block">
+                        <h2>The Rise of Functional Programming in React</h2>
+                        <p>React's design has increasingly embraced functional programming (FP) principles, marking a significant shift from traditional object-oriented approaches in frontend development. This paradigm shift offers benefits in testability, predictability, and performance, but also presents a learning curve for developers accustomed to imperative styles.</p>
+                        
+                        <div class="paradigm-comparison">
+                            <div class="comparison-grid">
+                                <div class="comparison-item">
+                                    <h4>Object-Oriented React (Legacy)</h4>
+                                    <ul>
+                                        <li>Class components with lifecycle methods</li>
+                                        <li>Mutable state with <code>this.setState</code></li>
+                                        <li>Inheritance patterns</li>
+                                        <li>Instance properties and methods</li>
+                                        <li>More imperative code structure</li>
+                                    </ul>
+                                </div>
+                                <div class="comparison-item highlight">
+                                    <h4>Functional React (Modern)</h4>
+                                    <ul>
+                                        <li>Function components with hooks</li>
+                                        <li>Immutable state updates</li>
+                                        <li>Composition over inheritance</li>
+                                        <li>Pure functions and reducers</li>
+                                        <li>Declarative code structure</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stats-card">
+                            <div class="stat-item">
+                                <div class="stat-number">89%</div>
+                                <div class="stat-label">of new React code uses functional components</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">72%</div>
+                                <div class="stat-label">of developers report better testability with FP</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">64%</div>
+                                <div class="stat-label">fewer state-related bugs with immutable data</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-block">
+                        <h2>Core Functional Programming Concepts in React</h2>
+                        
+                        <div class="fp-concept">
+                            <h3>1. Pure Functions</h3>
+                            <p>Pure functions always return the same output for the same inputs and have no side effects - a cornerstone of predictable React components.</p>
+                            
+                            <div class="code-comparison">
+                                <div class="code-panel">
+                                    <div class="code-header">Impure Function (Avoid)</div>
+                                    <pre><code class="language-javascript">let taxRate = 0.2;
+
+function calculateTotal(price) {
+  // Impure: Relies on external state (taxRate)
+  // and has side effect (console.log)
+  console.log('Calculating...');
+  return price + (price * taxRate);
+}</code></pre>
+                                </div>
+                                <div class="code-panel">
+                                    <div class="code-header">Pure Function (Preferred)</div>
+                                    <pre><code class="language-javascript">function calculateTotal(price, taxRate) {
+  return price + (price * taxRate);
+}
+
+// In React component:
+function CartTotal({ items, taxRate }) {
+  const subtotal = items.reduce((sum, item) => sum + item.price, 0);
+  const total = calculateTotal(subtotal, taxRate);
+  
+  return &lt;div&gt;Total: ${total}&lt;/div&gt;;
+}</code></pre>
+                                </div>
+                            </div>
+                            
+                            <div class="benefits-list">
+                                <h4>Benefits in React:</h4>
+                                <ul>
+                                    <li>Easier testing (no hidden dependencies)</li>
+                                    <li>Safe to use in React's render phase</li>
+                                    <li>Works perfectly with React.memo optimization</li>
+                                    <li>Predictable behavior in concurrent rendering</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="fp-concept">
+                            <h3>2. Immutability</h3>
+                            <p>React relies on immutable state updates to efficiently determine when to re-render components.</p>
+                            
+                            <div class="immutability-examples">
+                                <div class="example">
+                                    <h4>Mutable Update (Problematic)</h4>
+                                    <div class="code-panel">
+                                        <pre><code class="language-javascript">// ❌ Bad - direct mutation
+const [users, setUsers] = useState([]);
+
+function addUser(newUser) {
+  users.push(newUser); // Mutates existing array
+  setUsers(users); // React may not detect change
+}</code></pre>
+                                    </div>
+                                </div>
+                                <div class="example">
+                                    <h4>Immutable Update (Correct)</h4>
+                                    <div class="code-panel">
+                                        <pre><code class="language-javascript">// ✅ Good - new array reference
+const [users, setUsers] = useState([]);
+
+function addUser(newUser) {
+  setUsers([...users, newUser]); // New array
+}
+
+// For objects:
+setUser(prev => ({ ...prev, name: 'New Name' }));</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="immutability-libraries">
+                                <h4>Immutability Helpers:</h4>
+                                <div class="libraries-grid">
+                                    <div class="library-card">
+                                        <h5>Immer</h5>
+                                        <div class="code-panel mini">
+                                            <pre><code class="language-javascript">import produce from 'immer';
+
+setUsers(produce(draft => {
+  draft.push(newUser); // "Mutable" syntax that's actually immutable
+}));</code></pre>
+                                        </div>
+                                    </div>
+                                    <div class="library-card">
+                                        <h5>Immutable.js</h5>
+                                        <div class="code-panel mini">
+                                            <pre><code class="language-javascript">import { List } from 'immutable';
+const [users, setUsers] = useState(List());
+
+setUsers(users.push(newUser)); // Returns new immutable list</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="fp-concept">
+                            <h3>3. Higher-Order Functions</h3>
+                            <p>Functions that operate on other functions, either by taking them as arguments or returning them.</p>
+                            
+                            <div class="hof-examples">
+                                <div class="example">
+                                    <h4>Array Methods (FP Foundation)</h4>
+                                    <div class="code-panel">
+                                        <pre><code class="language-javascript">// Classic FP array operations
+const activeUsers = users.filter(user => user.isActive);
+const userNames = activeUsers.map(user => user.name);
+const totalActive = activeUsers.reduce((sum, user) => sum + user.value, 0);
+
+// In JSX:
+{users
+  .filter(user => user.isActive)
+  .map(user => (
+    &lt;UserCard key={user.id} user={user} /&gt;
+  ))
+}</code></pre>
+                                    </div>
+                                </div>
+                                <div class="example">
+                                    <h4>Higher-Order Components</h4>
+                                    <div class="code-panel">
+                                        <pre><code class="language-javascript">function withLogger(WrappedComponent) {
+  return function(props) {
+    console.log('Rendering:', WrappedComponent.name);
+    return &lt;WrappedComponent {...props} /&gt;;
+  };
+}
+
+// Usage:
+const EnhancedComponent = withLogger(MyComponent);</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-block">
+                        <h2>Functional Patterns in React Hooks</h2>
+                        <p>React Hooks API is deeply influenced by functional programming principles:</p>
+                        
+                        <div class="hooks-grid">
+                            <div class="hook-card">
+                                <h3>useState</h3>
+                                <p>Functional state management with immutable updates</p>
+                                <div class="code-panel mini">
+                                    <pre><code class="language-javascript">const [state, setState] = useState(initialState);
+
+// Functional update
+setState(prev => ({ ...prev, key: value }));</code></pre>
+                                </div>
+                            </div>
+                            <div class="hook-card">
+                                <h3>useReducer</h3>
+                                <p>Redux-like reducer pattern in functional components</p>
+                                <div class="code-panel mini">
+                                    <pre><code class="language-javascript">function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    default:
+      return state;
+  }
+}
+
+const [state, dispatch] = useReducer(reducer, { count: 0 });</code></pre>
+                                </div>
+                            </div>
+                            <div class="hook-card">
+                                <h3>useMemo</h3>
+                                <p>Memoization of expensive calculations</p>
+                                <div class="code-panel mini">
+                                    <pre><code class="language-javascript">const memoizedValue = useMemo(
+  () => computeExpensiveValue(a, b),
+  [a, b] // Only recompute when dependencies change
+);</code></pre>
+                                </div>
+                            </div>
+                            <div class="hook-card">
+                                <h3>useCallback</h3>
+                                <p>Stable function references for optimization</p>
+                                <div class="code-panel mini">
+                                    <pre><code class="language-javascript">const memoizedCallback = useCallback(
+  () => { doSomething(a, b); },
+  [a, b] // Recreate only when dependencies change
+);</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="custom-hooks">
+                            <h3>Custom Hooks: Functional Composition</h3>
+                            <p>Custom hooks let you extract component logic into reusable functions:</p>
+                            <div class="code-panel">
+                                <pre><code class="language-javascript">function useLocalStorage(key, initialValue) {
+  const [value, setValue] = useState(() => {
+    const stored = localStorage.getItem(key);
+    return stored !== null ? JSON.parse(stored) : initialValue;
+  });
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
+
+  return [value, setValue];
+}
+
+// Usage in component:
+const [name, setName] = useLocalStorage('name', '');</code></pre>
+                            </div>
+                            <div class="common-hooks">
+                                <h4>Common Custom Hook Patterns:</h4>
+                                <ul>
+                                    <li><code>useFetch</code> - Data fetching abstraction</li>
+                                    <li><code>useForm</code> - Form state management</li>
+                                    <li><code>useMediaQuery</code> - Responsive design</li>
+                                    <li><code>useEventListener</code> - Event management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-block">
+                        <h2>Functional Programming Benefits in React</h2>
+                        
+                        <div class="benefits-grid">
+                            <div class="benefit-card">
+                                <h3><i class="fas fa-bug"></i> Fewer Bugs</h3>
+                                <p>Immutable data and pure functions reduce unexpected side effects and make behavior more predictable.</p>
+                            </div>
+                            <div class="benefit-card">
+                                <h3><i class="fas fa-tachometer-alt"></i> Better Performance</h3>
+                                <p>Pure components can optimize rendering with <code>React.memo</code>, and immutable data helps React's reconciliation algorithm.</p>
+                            </div>
+                            <div class="benefit-card">
+                                <h3><i class="fas fa-flask"></i> Easier Testing</h3>
+                                <p>Pure functions are inherently testable - no need for complex mocks or setup since outputs depend only on inputs.</p>
+                            </div>
+                            <div class="benefit-card">
+                                <h3><i class="fas fa-project-diagram"></i> Improved Composition</h3>
+                                <p>Function composition leads to more modular, reusable code through patterns like higher-order components and custom hooks.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="case-study">
+                            <h3>Case Study: Redux to Reducer Pattern</h3>
+                            <p>The evolution from Redux to <code>useReducer</code> demonstrates React's functional direction:</p>
+                            <div class="evolution-steps">
+                                <div class="step">
+                                    <h4>Redux (2015)</h4>
+                                    <div class="code-panel mini">
+                                        <pre><code class="language-javascript">// Action
+const increment = () => ({ type: 'INCREMENT' });
+
+// Reducer
+function counter(state = 0, action) {
+  switch (action.type) {
+    case 'INCREMENT': return state + 1;
+    default: return state;
+  }
+}
+
+// Store
+const store = createStore(counter);</code></pre>
+                                    </div>
+                                </div>
+                                <div class="step">
+                                    <h4>useReducer (2018)</h4>
+                                    <div class="code-panel mini">
+                                        <pre><code class="language-javascript">function Counter() {
+  const [state, dispatch] = useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case 'INCREMENT': return state + 1;
+        default: return state;
+      }
+    },
+    0 // Initial state
+  );
+  
+  return (
+    &lt;button onClick={() => dispatch({ type: 'INCREMENT' })}&gt;
+      Count: {state}
+    &lt;/button&gt;
+  );
+}</code></pre>
+                                    </div>
+                                </div>
+                                <div class="step">
+                                    <h4>Redux Toolkit (Modern)</h4>
+                                    <div class="code-panel mini">
+                                        <pre><code class="language-javascript">const counterSlice = createSlice({
+  name: 'counter',
+  initialState: 0,
+  reducers: {
+    increment: state => state + 1,
+  },
+});
+
+const { increment } = counterSlice.actions;
+const reducer = counterSlice.reducer;</code></pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-block">
+                        <h2>Learning Functional Programming with React</h2>
+                        
+                        <div class="learning-path">
+                            <h3>Progressive Learning Path</h3>
+                            <div class="path-steps">
+                                <div class="path-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h4>Array Methods</h4>
+                                        <p>Master <code>map</code>, <code>filter</code>, <code>reduce</code> for data transformations</p>
+                                    </div>
+                                </div>
+                                <div class="path-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h4>Pure Functions</h4>
+                                        <p>Write components and utilities without side effects</p>
+                                    </div>
+                                </div>
+                                <div class="path-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h4>Immutable Updates</h4>
+                                        <p>Practice spread syntax and immutable state patterns</p>
+                                    </div>
+                                </div>
+                                <div class="path-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h4>Function Composition</h4>
+                                        <p>Combine simple functions to build complex behavior</p>
+                                    </div>
+                                </div>
+                                <div class="path-step">
+                                    <div class="step-number">5</div>
+                                    <div class="step-content">
+                                        <h4>Custom Hooks</h4>
+                                        <p>Extract and reuse stateful logic</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="resources-section">
+                            <h3>Recommended Resources</h3>
+                            <div class="resources-grid">
+                                <div class="resource-card">
+                                    <h4><a href="https://mostly-adequate.gitbook.io/mostly-adequate-guide/" target="_blank">Professor Frisby's Mostly Adequate Guide</a></h4>
+                                    <p>Excellent free book on functional programming in JavaScript</p>
+                                </div>
+                                <div class="resource-card">
+                                    <h4><a href="https://github.com/getify/Functional-Light-JS" target="_blank">Functional-Light JavaScript</a></h4>
+                                    <p>Practical approach to FP without all the math</p>
+                                </div>
+                                <div class="resource-card">
+                                    <h4><a href="https://epicreact.dev/" target="_blank">Epic React</a></h4>
+                                    <p>Kent C. Dodds' course on modern React patterns</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-navigation">
+                            <a href="../new-ecmascript-syntax/index.html" class="btn btn-secondary">← Previous: New ECMAScript Syntax</a>
+                            <a href="../javascript-tooling-fatigue/index.html" class="btn btn-primary">Next: JavaScript Tooling Fatigue →</a>
+                        </div>
+                    </div>
+                </article>
+                
+                <aside class="sidebar">
+                    <div class="sidebar-widget">
+                        <h3>FP Principles Cheat Sheet</h3>
+                        <ul>
+                            <li><strong>Pure Functions</strong>: Same input → same output, no side effects</li>
+                            <li><strong>Immutability</strong>: Don't change data, create new copies</li>
+                            <li><strong>Function Composition</strong>: Combine simple functions</li>
+                            <li><strong>Higher-Order Functions</strong>: Functions that operate on functions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-widget">
+                        <h3>React FP Patterns</h3>
+                        <ul>
+                            <li>Function components</li>
+                            <li>Custom hooks</li>
+                            <li>Reducer pattern</li>
+                            <li>Component composition</li>
+                            <li>Render props</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-widget">
+                        <h3>FP Utility Libraries</h3>
+                        <ul>
+                            <li><a href="https://ramdajs.com/" target="_blank">Ramda</a></li>
+                            <li><a href="https://lodash.com/" target="_blank">Lodash/fp</a></li>
+                            <li><a href="https://immutable-js.com/" target="_blank">Immutable.js</a></li>
+                            <li><a href="https://immerjs.github.io/immer/" target="_blank">Immer</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+</body>
+</html>

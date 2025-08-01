@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>https://www.drstryk.com</loc>
+		<priority>1.00</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/Welcome To React</loc>
+		<priority>0.75</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/pages/obstacles-roadblocks.html</loc>
+		<priority>0.50</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/pages/react-is-a-library.html</loc>
+		<priority>0.50</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/Welcome To React/pages/functional-javascript</loc>
+		<priority>0.25</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/Welcome To React/pages/javascript-tooling-fatigue</loc>
+		<priority>0.25</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/Welcome To React/pages/keeping-up-with-changes</loc>
+		<priority>0.25</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/Welcome To React/pages/new-ecmascript-syntax</loc>
+		<priority>0.25</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/Welcome To React/pages/obstacles-and-roadblocks</loc>
+		<priority>0.25</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/Welcome To React/pages/react-future</loc>
+		<priority>0.25</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/Welcome To React/pages/react-is-a-library</loc>
+		<priority>0.25</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+	<url>
+		<loc>https://www.drstryk.com/Welcome To React/pages/why-react-is-easy</loc>
+		<priority>0.25</priority>
+		<lastmod>2025-08-01</lastmod>
+	</url>
+</urlset>
